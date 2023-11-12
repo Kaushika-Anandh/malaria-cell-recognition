@@ -45,7 +45,7 @@ To develop a deep neural network for Malaria infected cell recognition and to an
 ## Neural Network Model
 
 <p align="center">
-<img src="https://github.com/Kaushika-Anandh/malaria-cell-recognition/blob/main/op1.png" width="850" height="300">
+<img src="https://github.com/Kaushika-Anandh/malaria-cell-recognition/blob/main/op1.png" width="750" height="250">
 </p>
 
 ## DESIGN STEPS
@@ -126,15 +126,14 @@ sns.jointplot(x=dim1,y=dim2)
 ```python
 image_shape = (130,130,3)
 
-image_gen = ImageDataGenerator(rotation_range=20, # rotate the image 20 degrees
-                               width_shift_range=0.10, # Shift the pic width by a max of 5%
-                               height_shift_range=0.10, # Shift the pic height by a max of 5%
-                               rescale=1/255, # Rescale the image by normalzing it.
-                               shear_range=0.1, # Shear means cutting away part of the image (max 10%)
-                               zoom_range=0.1, # Zoom in by 10% max
-                               horizontal_flip=True, # Allo horizontal flipping
-                               fill_mode='nearest' # Fill in missing pixels with the nearest filled value
-                              )
+image_gen = ImageDataGenerator(rotation_range=20,
+                               width_shift_range=0.10, 
+                               height_shift_range=0.10, 
+                               rescale=1/255, 
+                               shear_range=0.1, 
+                               zoom_range=0.1, 
+                               horizontal_flip=True,
+                               fill_mode='nearest')
 ```
 
 **network model**
@@ -197,7 +196,8 @@ img  = tf.convert_to_tensor(np.asarray(para_img))
 img = tf.image.resize(img,(130,130))
 img=img.numpy()
 pred=bool(model.predict(img.reshape(1,130,130,3))<0.5 )
-plt.title("Model prediction: "+("Parasitized" if pred  else "Un Infected")+"\nActual Value: "+str(dir_))
+plt.title("Model prediction: "+("Parasitized" if pred
+    else "Un Infected")+"\nActual Value: "+str(dir_))
 plt.axis("off")
 plt.imshow(img)
 plt.show()
