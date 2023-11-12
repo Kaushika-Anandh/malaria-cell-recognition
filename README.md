@@ -87,7 +87,6 @@ config.gpu_options.allow_growth = True # dynamically grow the memory used on the
 config.log_device_placement = True # to log device placement (on which device the operation ran)
 sess = tf.compat.v1.Session(config=config)
 set_session(sess)
-
 %matplotlib inline
 ```
 
@@ -115,7 +114,6 @@ for image_filename in os.listdir(test_path+'/uninfected'):
     d1,d2,colors = img.shape
     dim1.append(d1)
     dim2.append(d2)
-
 print(dim1)
 ```
 ```python
@@ -125,7 +123,6 @@ sns.jointplot(x=dim1,y=dim2)
 **generating images**
 ```python
 image_shape = (130,130,3)
-
 image_gen = ImageDataGenerator(rotation_range=20,
                                width_shift_range=0.10, 
                                height_shift_range=0.10, 
@@ -142,15 +139,11 @@ model = models.Sequential()
 model.add(keras.Input(shape=(image_shape)))
 model.add(layers.Conv2D(filters=32,kernel_size=(3,3),activation='relu',))
 model.add(layers.MaxPooling2D(pool_size=(2, 2)))
-
 model.add(layers.Conv2D(filters=64, kernel_size=(3,3), activation='relu',))
 model.add(layers.MaxPooling2D(pool_size=(2, 2)))
-
 model.add(layers.Conv2D(filters=64, kernel_size=(3,3), activation='relu',))
 model.add(layers.MaxPooling2D(pool_size=(2, 2)))
-
 model.add(layers.Flatten())
-
 model.add(layers.Dense(128))
 model.add(layers.Dense(64,activation='relu'))
 model.add(layers.Dropout(0.5))
@@ -160,13 +153,11 @@ model.summary()
 ```
 ```python
 batch_size = 16
-
 train_image_gen = image_gen.flow_from_directory(train_path,
                                                target_size=image_shape[:2],
                                                 color_mode='rgb',
                                                batch_size=batch_size,
                                                class_mode='binary')
-
 
 test_image_gen = image_gen.flow_from_directory(test_path,
                                                target_size=image_shape[:2],
