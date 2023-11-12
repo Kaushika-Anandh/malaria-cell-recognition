@@ -1,3 +1,30 @@
+Exp.No : 04 
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+&emsp;
+Date : 04.11.2023 
+<br>
 # Deep Neural Network for Malaria Infected Cell Recognition
 
 ## AIM
@@ -6,36 +33,36 @@ To develop a deep neural network for Malaria infected cell recognition and to an
 
 ## Problem Statement and Dataset
 
-The problem at hand is the automatic classification of red blood cell images into two categories: parasitized and uninfected. Malaria-infected red blood cells, known as parasitized cells, contain the Plasmodium parasite, while uninfected cells are healthy and free from the parasite. The goal is to build a convolutional neural network (CNN) model capable of accurately distinguishing between these two classes based on cell images.
-
-Traditional methods of malaria diagnosis involve manual inspection of blood smears by trained professionals, which can be time-consuming and error-prone. Automating this process using deep learning can significantly speed up diagnosis, reduce the workload on healthcare professionals, and improve the accuracy of detection.
-
-Our dataset comprises 27,558 cell images, evenly split between parasitized and uninfected cells. These images have been meticulously collected and annotated by medical experts, making them a reliable source for training and testing our deep neural network.
+- The problem at hand is the automatic classification of red blood cell images into two categories: parasitized and uninfected.
+  - Malaria-infected red blood cells, known as parasitized cells, contain the Plasmodium parasite
+  - uninfected cells are healthy and free from the parasite.
+- The goal is to build a convolutional neural network (CNN) model capable of accurately distinguishing between these two classes based on cell images.
+- Traditional methods of malaria diagnosis involve manual inspection of blood smears by trained professionals, which can be time-consuming and error-prone.
+- Automating this process using deep learning can significantly speed up diagnosis, reduce the workload on healthcare professionals, and improve the accuracy of detection.
+- Our dataset comprises 27,558 cell images, evenly split between parasitized and uninfected cells.
+- These images have been meticulously collected and annotated by medical experts, making them a reliable source for training and testing our deep neural network.
 
 ## Neural Network Model
 
-![](op1.png)
+<p align="center">
+<img src="https://github.com/Kaushika-Anandh/malaria-cell-recognition/blob/main/op1.png" width="850" height="300">
+</p>
 
 ## DESIGN STEPS
 
 - **Step 1:** We begin by importing the necessary Python libraries, including TensorFlow for deep learning, data preprocessing tools, and visualization libraries.
-
 - **Step 2:** To leverage the power of GPU acceleration, we configure TensorFlow to allow GPU processing, which can significantly speed up model training.
-
 - **Step 3:** We create an image generator that performs data augmentation, including rotation, shifting, rescaling, and flipping. Data augmentation enhances the model's ability to generalize and recognize malaria-infected cells in various orientations and conditions.
-
 - **Step 4:** We design a convolutional neural network (CNN) architecture consisting of convolutional layers, max-pooling layers, and fully connected layers. The model is compiled with appropriate loss and optimization functions.
-
 - **Step 5:** We split the dataset into training and testing sets, and then train the CNN model using the training data. The model learns to differentiate between parasitized and uninfected cells during this phase.
-
 - **Step 6:** We evaluate the trained model's performance using the testing data, generating a classification report and confusion matrix to assess accuracy and potential misclassifications.
 
 ## PROGRAM
 
-```
-Developed by: Kaushika A
-Register No : 212221230048
-```
+> Developed by: Kaushika A <br>
+> Register no: 212221230048
+
+**importing libraries**
 ```python
 import os
 import pandas as pd
@@ -51,7 +78,9 @@ from tensorflow.keras import utils
 from tensorflow.keras import models
 from sklearn.metrics import classification_report,confusion_matrix
 import tensorflow as tf
-# to share the GPU resources for multiple sessions
+```
+**to share the GPU resources for multiple sessions**
+```python
 from tensorflow.compat.v1.keras.backend import set_session
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True # dynamically grow the memory used on the GPU
@@ -61,6 +90,8 @@ set_session(sess)
 
 %matplotlib inline
 ```
+
+**loading dataset**
 ```python
 my_data_dir = 'dataset/cell_images'
 os.listdir(my_data_dir)
@@ -90,6 +121,8 @@ print(dim1)
 ```python
 sns.jointplot(x=dim1,y=dim2)
 ```
+
+**generating images**
 ```python
 image_shape = (130,130,3)
 
@@ -103,6 +136,8 @@ image_gen = ImageDataGenerator(rotation_range=20, # rotate the image 20 degrees
                                fill_mode='nearest' # Fill in missing pixels with the nearest filled value
                               )
 ```
+
+**network model**
 ```python
 model = models.Sequential()
 model.add(keras.Input(shape=(image_shape)))
@@ -141,12 +176,12 @@ test_image_gen = image_gen.flow_from_directory(test_path,
                                                class_mode='binary',shuffle=False)
 ```
 ```python
-
 results = model.fit(train_image_gen,epochs=2,validation_data=test_image_gen)
 ```
+
+**metrics**
 ```python
 losses = pd.DataFrame(model.history.history)
-
 losses[['loss','val_loss']].plot()
 ```
 ```python
@@ -168,29 +203,27 @@ plt.imshow(img)
 plt.show()
 ```
 ```python
-
 model.evaluate(test_image_gen)
 pred_probabilities = model.predict(test_image_gen)
 test_image_gen.classes
 predictions = pred_probabilities > 0.5
 print(classification_report(test_image_gen.classes,predictions))
 confusion_matrix(test_image_gen.classes,predictions)
-
 ```
 
 ## OUTPUT
 
 ### Training Loss, Validation Loss Vs Iteration Plot
 
-![](op2.png)
+<img src="https://github.com/Kaushika-Anandh/malaria-cell-recognition/blob/main/op2.png" width="400" height="280">
 
 ### Classification Report and Confusion Matrix
 
-![](op3.png)
+<img src="https://github.com/Kaushika-Anandh/malaria-cell-recognition/blob/main/op4.png" width="500" height="200">
 
 ### New Sample Data Prediction
 
-![](op4.png)
+<img src="https://github.com/Kaushika-Anandh/malaria-cell-recognition/blob/main/op3.png" width="280" height="300">
 
 ## RESULT
 
